@@ -1,0 +1,1 @@
+/home/haider/caffe/examples/master-thesis/data/test.hdf5

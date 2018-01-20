@@ -1,199 +1,206 @@
-name: "train-mnistCAE10sym0202"
-layers {
+name: "train-mnistCAE12sym0302"
+layer {
   name: "data"
-  type: HDF5_DATA
+  type: "HDF5Data"
   top: "data"
   include {
     phase: TRAIN
   }
   hdf5_data_param {
-    source: "/home/haider/caffe/examples/master-thesis/data/trainnormfile.txt"
+  source: "/home/haider/caffe/examples/master-thesis/data/trainnormfile.txt"
     batch_size: 100
   }
 }
-layers {
+layer {
   name: "data"
-  type: HDF5_DATA
+  type: "HDF5Data"
   top: "data"
   include {
     phase: TEST
   }
   hdf5_data_param {
-    source: "/home/haider/caffe/examples/master-thesis/data/testnormfile.txt"
+  source: "/home/haider/caffe/examples/master-thesis/data/testnormfile.txt"
     batch_size: 100
   }
 }
 # --------- encoding part ---------
-layers {
+layer {
   name: "conv1"
-  type: CONVOLUTION
+  type: "Convolution"
   bottom: "data"
   top: "conv1"
-  blobs_lr: 1
-  blobs_lr: 3
+  param { lr_mult: 1 decay_mult: 1 }
+  param { lr_mult: 2 decay_mult: 0 }
   convolution_param {
-    num_output: 8
+    num_output: 12
     kernel_size: 9
     stride: 1
     weight_filler { type: "xavier" }
-    bias_filler { type: "constant" }
+    bias_filler { type: "constant" value: 0 }
   }
 }
-layers {
+layer {
   name: "sig1en"
-  type: SIGMOID
+  type: "Sigmoid"
   bottom: "conv1"
   top: "conv1"
 }
-layers {
+layer {
   name: "conv2"
-  type: CONVOLUTION
+  type: "Convolution"
   bottom: "conv1"
   top: "conv2"
-  blobs_lr: 1
-  blobs_lr: 3
+  param { lr_mult: 1 decay_mult: 1 }
+  param { lr_mult: 2 decay_mult: 0 }
   convolution_param {
-    num_output: 4
+    num_output: 16
     kernel_size: 9
     stride: 1
     weight_filler { type: "xavier" }
-    bias_filler { type: "constant" }
+    bias_filler { type: "constant" value: 0 }
   }
 }
-layers {
+layer {
   name: "sig2en"
-  type: SIGMOID
+  type: "Sigmoid"
   bottom: "conv2"
   top: "conv2"
 }
-layers {
+layer {
   name: "ip1encode"
-  type: INNER_PRODUCT
+  type: "InnerProduct"
   bottom: "conv2"
   top: "ip1encode"
-  blobs_lr: 1
-  blobs_lr: 3
+  param { lr_mult: 1 decay_mult: 1 }
+  param { lr_mult: 2 decay_mult: 0 }
   inner_product_param {
-    num_output: 250
+    num_output: 125
     weight_filler { type: "gaussian" std: 1 sparse: 25 }
-    bias_filler { type: "constant" }
+    bias_filler { type: "constant" value: 0 }
   }
 }
-layers {
+layer {
   name: "sig3en"
-  type: SIGMOID
+  type: "Sigmoid"
   bottom: "ip1encode"
   top: "ip1encode"
 }
-layers {
+layer {
   name: "ip2encode"
-  type: INNER_PRODUCT
+  type: "InnerProduct"
   bottom: "ip1encode"
   top: "ip2encode"
- blobs_lr: 1
- blobs_lr: 3
+  param { lr_mult: 1 decay_mult: 1 }
+  param { lr_mult: 2 decay_mult: 0 }
   inner_product_param {
     num_output: 2
     weight_filler { type: "gaussian" std: 1 sparse: 2 }
-    bias_filler { type: "constant" }
+    bias_filler { type: "constant" value: 0 }
   }
 }
 # --------- decoding part ---------
-layers {
+layer {
   name: "ip1decode"
-  type: INNER_PRODUCT
+  type: "InnerProduct"
   bottom: "ip2encode"
   top: "ip1decode"
-  blobs_lr: 1
-  blobs_lr: 3
+  param { lr_mult: 1 decay_mult: 1 }
+  param { lr_mult: 2 decay_mult: 0 }
   inner_product_param {
-    num_output: 250
+    num_output: 125
     weight_filler { type: "gaussian" std: 1 sparse: 25 }
-    bias_filler { type: "constant" }
+    bias_filler { type: "constant" value: 0 }
   }
 }
-layers {
+layer {
   name: "sig3de"
-  type: SIGMOID
+  type: "Sigmoid"
   bottom: "ip1decode"
   top: "ip1decode"
 }
-layers {
+layer {
+    name: "reshape"
+    type: "Reshape"
+    bottom: "ip1decode"
+    top: "ip1decodesh"
+    reshape_param { shape { dim: 0 dim: 0 dim: 1 dim: 1 } }
+}
+layer {
   name: "deconv2"
-  type: DECONVOLUTION
-  bottom: "ip1decode"
+  type: "Deconvolution"
+  bottom: "ip1decodesh"
   top: "deconv2"
-  blobs_lr: 1
-  blobs_lr: 3
+  param { lr_mult: 1 decay_mult: 1 }
+  param { lr_mult: 2 decay_mult: 0 }
   convolution_param {
-    num_output: 4
+    num_output: 16
     kernel_size: 12
     stride: 1
     weight_filler { type: "xavier" }
-    bias_filler { type: "constant" }
+    bias_filler { type: "constant" value: 0 }
   }
 }
-layers {
+layer {
   name: "sig2de"
-  type: SIGMOID
+  type: "Sigmoid"
   bottom: "deconv2"
   top: "deconv2"
 }
-layers {
+layer {
   name: "deconv1"
-  type: DECONVOLUTION
+  type: "Deconvolution"
   bottom: "deconv2"
   top: "deconv1"
-  blobs_lr: 1
-  blobs_lr: 3
+  param { lr_mult: 1 decay_mult: 1 }
+  param { lr_mult: 2 decay_mult: 0 }
   convolution_param {
-    num_output: 4
+    num_output: 6
     kernel_size: 17
     stride: 1
     weight_filler { type: "xavier" }
-    bias_filler { type: "constant" }
+    bias_filler { type: "constant" value: 0 }
   }
 }
-layers {
+layer {
   name: "sig1de"
-  type: SIGMOID
+  type: "Sigmoid"
   bottom: "deconv1"
   top: "deconv1"
 }
 # -- convert back to 784 elements --
-layers {
+layer {
   name: "deconv1neur"
-  type: DECONVOLUTION
+  type: "Deconvolution"
   bottom: "deconv1"
   top: "deconv1neur"
-  blobs_lr: 1
-  blobs_lr: 3
+  param { lr_mult: 1 decay_mult: 1 }
+  param { lr_mult: 2 decay_mult: 0 }
   convolution_param {
     num_output: 1
     kernel_size: 1
     stride: 1
     weight_filler { type: "xavier" }
-    bias_filler { type: "constant" }
+    bias_filler { type: "constant" value: 0 }
   }
 }
 # --------- calculate loss ---------
-layers {
+layer {
   name: "loss"
-  type: SIGMOID_CROSS_ENTROPY_LOSS
+  type: "SigmoidCrossEntropyLoss"
   bottom: "deconv1neur"
   bottom: "data"
   top: "cross_entropy_loss"
   loss_weight: 1
 }
-layers {
+layer {
   name: "deconv1neursig"
-  type: SIGMOID
+  type: "Sigmoid"
   bottom: "deconv1neur"
   top: "deconv1neursig"
 }
-layers {
+layer {
   name: "loss"
-  type: EUCLIDEAN_LOSS
+  type: "EuclideanLoss"
   bottom: "deconv1neursig"
   bottom: "data"
   top: "l2_error"

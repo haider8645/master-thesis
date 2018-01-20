@@ -1,4 +1,4 @@
-net: "VTU/02cae/mnist10sym02/train-mnistCAE10sym0202.prototxt"
+net: "/home/haider/caffe/examples/master-thesis/train-mnistCAE12sym0302.prototxt"
 test_iter: 100
 test_interval: 1000
 test_compute_loss: true
@@ -10,5 +10,5 @@ lr_policy: "fixed"
 display: 1000
 max_iter: 20000
 snapshot: 1000
-snapshot_prefix: "VTU/02cae/mnist10sym02/mnistCAE10sym0202-03"
+snapshot_prefix: "/home/haider/caffe/examples/master-thesis/snapshots"
 solver_mode: GPU
