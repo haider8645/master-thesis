@@ -81,6 +81,7 @@ models/*
 *lmdb
 *.hdf5
 *.h5
+build-caffe-qt
 
 # build, distribute, and bins (+ python proto bindings)
 build
