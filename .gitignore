@@ -79,6 +79,8 @@ models/*
 *.binaryproto
 *leveldb
 *lmdb
+*.hdf5
+*.h5
 
 # build, distribute, and bins (+ python proto bindings)
 build
