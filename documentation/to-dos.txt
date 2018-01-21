@@ -1,0 +1,10 @@
+For 22/01/2018
+
+1) See the caffe.proto file in caffe_root/src/caffe/proto/caffe.proto
+The above file has the definitions for all the layers, maybe it is has
+the syntax too, will be good to know this.
+
+2) Start working on the visualization of the trained caffe model either in python or matlab.
+
+3) Look into the paper of the CAE w/o pooling layers and see how they make sure that
+the training parameters are the same in both encoder & decoder part.
