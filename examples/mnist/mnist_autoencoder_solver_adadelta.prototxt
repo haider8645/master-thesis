@@ -1,4 +1,4 @@
-net: "/home/haider/caffe/examples/mnist/mnist_autoencoder.prototxt"
+net: "/home/haider/caffe/examples/mnist/mnist_autoencoder_adadelta_train/mnist_autoencoder.prototxt"
 test_state: { stage: 'test-on-train' }
 test_iter: 500
 test_state: { stage: 'test-on-test' }
