@@ -21,3 +21,6 @@ the training parameters are the same in both encoder & decoder part.
 
 1) Trying the scatter plot in matlab or python
 2) make the hdf5 format dataset for the waste material images.
+
+27/01/2018
+same tasks for mentioned in 25/01/2018

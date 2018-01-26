@@ -52,3 +52,6 @@ Then the output, input layers have the same dimenions ;)
 1) Succesfully able to setup on BIBA deep learning server.
 2) Build maste-thesis caffe master using make and created a remote repository called biba
 3) Trained the cae-02 network using mnist dataset, training took less than 30 mins, at home it took 12 hours.
+
+26/01/2018
+Use just the master branch, it is simple and easy to use.
