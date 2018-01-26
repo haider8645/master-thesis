@@ -1,3 +1,4 @@
+
 For 22/01/2018
 
 1) See the caffe.proto file in caffe_root/src/caffe/proto/caffe.proto
@@ -8,3 +9,15 @@ the syntax too, will be good to know this.
 
 3) Look into the paper of the CAE w/o pooling layers and see how they make sure that
 the training parameters are the same in both encoder & decoder part.
+
+
+
+24/01/2018
+
+1) The visualization using the python wrapper was done. Still need to do the scatter plot either in matlab or python.
+
+
+25/01/2018
+
+1) Trying the scatter plot in matlab or python
+2) make the hdf5 format dataset for the waste material images.
