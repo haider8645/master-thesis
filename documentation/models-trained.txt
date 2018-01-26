@@ -1,0 +1,19 @@
+20/01/2018
+1)
+
+The CAE without pooling layers is trained and tested
+
+data type: hdf5
+location: examples/master-thesis
+Training time: almost 12 hours ( 6 pm to about 6 am)
+
+
+2)
+
+The conventional FC auto encoder in caffe examples is training as of writing this file
+
+location: examples/mnist/
+data type: LMDB
+training time: going on, started at
+Note: I used the AdaDelta solver, and there are in total 3 options. I do not know the difference
+between these solvers but will see how they work in the near future in shaa Allah.
