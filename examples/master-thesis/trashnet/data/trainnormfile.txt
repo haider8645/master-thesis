@@ -1,1 +1,1 @@
-/home/lod/master-thesis/mnist_hdf5/train.hdf5
+/home/lod/master-thesis/trashnet/trash.hdf5

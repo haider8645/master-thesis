@@ -2,7 +2,7 @@ name: "train-mnistCAE12sym0302"
 layer {
   name: "data"
   type: "HDF5Data"
-  top: "data"
+  top: "train"
   include {
     phase: TRAIN
   }
@@ -14,7 +14,7 @@ layer {
 layer {
   name: "data"
   type: "HDF5Data"
-  top: "data"
+  top: "train"
   include {
     phase: TEST
   }
@@ -27,7 +27,7 @@ layer {
 layer {
   name: "conv1"
   type: "Convolution"
-  bottom: "data"
+  bottom: "train"
   top: "conv1"
   param { lr_mult: 1 decay_mult: 1 }
   param { lr_mult: 2 decay_mult: 0 }
@@ -176,7 +176,7 @@ layer {
   param { lr_mult: 1 decay_mult: 1 }
   param { lr_mult: 2 decay_mult: 0 }
   convolution_param {
-    num_output: 1
+    num_output: 3
     kernel_size: 1
     stride: 1
     weight_filler { type: "xavier" }
@@ -188,7 +188,7 @@ layer {
   name: "loss"
   type: "SigmoidCrossEntropyLoss"
   bottom: "deconv1neur"
-  bottom: "data"
+  bottom: "train"
   top: "cross_entropy_loss"
   loss_weight: 1
 }
@@ -202,7 +202,7 @@ layer {
   name: "loss"
   type: "EuclideanLoss"
   bottom: "deconv1neursig"
-  bottom: "data"
+  bottom: "train"
   top: "l2_error"
   loss_weight: 0
 }
