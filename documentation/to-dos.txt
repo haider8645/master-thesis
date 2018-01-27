@@ -23,4 +23,7 @@ the training parameters are the same in both encoder & decoder part.
 2) make the hdf5 format dataset for the waste material images.
 
 27/01/2018
-same tasks for mentioned in 25/01/2018
+made the hdf5 dataset for trashnet dataset
+
+28/01/2018
+change the cae model to work with 512 x 384 size images

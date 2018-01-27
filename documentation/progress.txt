@@ -55,3 +55,7 @@ Then the output, input layers have the same dimenions ;)
 
 26/01/2018
 Use just the master branch, it is simple and easy to use.
+
+27/01/2018
+
+1) made a h5 file for trashnet datset
