@@ -20,7 +20,7 @@ layer {
     phase: TEST
   }
   hdf5_data_param {
-  source: "/home/haider/caffe/examples/master-thesis/data/testnormfile.txt"
+  source: "/home/lod/master-thesis/examples/master-thesis/data/testnormfile.txt"
     batch_size: 1
   }
 }
