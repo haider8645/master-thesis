@@ -59,3 +59,7 @@ Use just the master branch, it is simple and easy to use.
 27/01/2018
 
 1) made a h5 file for trashnet datset
+
+03/02/2018
+
+1) I have succesfully made a plot of the CAE-2 using scatter plot. 

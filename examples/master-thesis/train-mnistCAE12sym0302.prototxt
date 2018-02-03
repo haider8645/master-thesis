@@ -8,19 +8,20 @@ layer {
   }
   hdf5_data_param {
   source: "/home/lod/master-thesis/examples/master-thesis/data/trainnormfile.txt"
-    batch_size: 100
+    batch_size: 50
   }
 }
 layer {
   name: "data"
   type: "HDF5Data"
   top: "data"
+  top: "label"
   include {
     phase: TEST
   }
   hdf5_data_param {
   source: "/home/lod/master-thesis/examples/master-thesis/data/testnormfile.txt"
-    batch_size: 100
+    batch_size: 1
   }
 }
 # --------- encoding part ---------

@@ -27,3 +27,6 @@ made the hdf5 dataset for trashnet dataset
 
 28/01/2018
 change the cae model to work with 512 x 384 size images
+
+03/02/2018
+Work on the T-SNE for 4 - CAE model plot in 2D
