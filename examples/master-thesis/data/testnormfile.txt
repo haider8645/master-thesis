@@ -1,1 +1,1 @@
-/home/lod/master-thesis/mnist_hdf5/test.hdf5
+/home/haider/caffe/examples/master-thesis/data/test.hdf5

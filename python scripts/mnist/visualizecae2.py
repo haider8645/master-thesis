@@ -1,6 +1,7 @@
 # set up Python environment: numpy for numerical routines, and matplotlib for plotting
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.pyplot import show, plot, draw
 import sys
 import os
 import cv2
@@ -21,8 +22,8 @@ caffe.set_device(0)
 caffe.set_mode_gpu()
 # set the model definitions since we are using a pretrained network here.
 # this protoype definitions can be changed to make significant changes in the learning method.
-model_def = '/home/haider/caffe/examples/master-thesis/train-mnistCAE12sym0302.prototxt'
-model_weights = '/home/haider/caffe/examples/master-thesis/snapshots_iter_20000.caffemodel'
+model_def = '/home/haider/Desktop/train-mnistCAE12sym0302.prototxt'
+model_weights = '/home/haider/Desktop/snapshots_iter_50000.caffemodel'
 
 
 net = caffe.Net(model_def,      # defines the structure of the model
@@ -39,10 +40,12 @@ for name, blob in net.blobs.iteritems():
 x_data_plot = []
 y_data_plot = []
 labels=[]
+X_old = 0
 
 #fig = plt.figure()
 #ax = fig.add_subplot(1,1,1,axisbg = "1.0")
-for j in range(10):
+for j in range(10000):
+    show(block=False)
     net.forward()
     X = net.blobs["ip2encode"].data[0]
 #print("output")
@@ -51,30 +54,38 @@ for j in range(10):
     T=net.blobs["label"].data[0]
 #    labels.append(T[0])
 #    print T[0]
-    print T[0]
-    if T[0] == 0:
-        plt.scatter(X[0],X[1],s=50,c="black",alpha=0.8,label="zero")
-    if T[0] == 1:
-        plt.scatter(X[0],X[1],s=50,c="red",alpha=0.8,label="one")
-    if T[0] == 2:
-        plt.scatter(X[0],X[1],s=50,c="gold",alpha=0.8,label="two")
-    if T[0] == 3:
-        plt.scatter(X[0],X[1],s=50,c="blue",alpha=0.8,label="three")
-    if T[0] == 4:
-        plt.scatter(X[0],X[1],s=50,c="green",alpha=0.8,label="four")
-    if T[0] == 5:
-        plt.scatter(X[0],X[1],s=50,c="orange",alpha=0.8,label="five")
-    if T[0] == 6:
-        plt.scatter(X[0],X[1],s=50,c="magenta",alpha=0.8,label="six")
-    if T[0] == 7:
-        plt.scatter(X[0],X[1],s=50,c="pink",alpha=0.8,label="seven")
-    if T[0] == 8:
-        plt.scatter(X[0],X[1],s=50,c="brown",alpha=0.8,label="eight")
-    if T[0] == 9:
-        plt.scatter(X[0],X[1],s=50,c="yellow",alpha=0.8,label="nine")
-    x_data_plot.append(X[0])
-    y_data_plot.append(X[1])
+    print j
+#    print T[0]
+#    print X[0]
+#    print X[1]
 
+#    print X[0] - X_old
+    if T[0] == 0:
+#        print "hit"
+        plt.scatter(X[0],X[1],c="black",alpha=1.0)
+    if T[0] == 1:
+#        print "hit"
+        plt.scatter(X[0],X[1],c="red",alpha=1.0)
+    if T[0] == 2:
+#        print "hit"
+        plt.scatter(X[0],X[1],c="gold",alpha=1.0)
+    if T[0] == 3:
+        plt.scatter(X[0],X[1],c="blue",alpha=1.0)
+    if T[0] == 4:
+        plt.scatter(X[0],X[1],c="green",alpha=1.0)
+    if T[0] == 5:
+        plt.scatter(X[0],X[1],c="orange",alpha=1.0)
+    if T[0] == 6:
+        plt.scatter(X[0],X[1],c="magenta",alpha=1.0)
+    if T[0] == 7:
+        plt.scatter(X[0],X[1],c="pink",alpha=1.0)
+    if T[0] == 8:
+        plt.scatter(X[0],X[1],c="brown",alpha=1.0)
+    if T[0] == 9:
+        plt.scatter(X[0],X[1],c="yellow",alpha=1.0)
+    plt.draw()
+#    X_old = X[0]
+plt.show()
 labels = ("zero","one","two","three","four","five","six","seven","eight","nine")
 colors = ("black","red","gold","blue","indigo","orange","darkblue","crimson","lightpink","olive")
 #fig = plt.figure()
