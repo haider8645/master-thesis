@@ -25,3 +25,7 @@ between these solvers but will see how they work in the near future in shaa Alla
 
 I have re-trained the CAE-02 with batch size of 50 and max iterations at 50000.
 
+08/08/2018
+
+I have trained CAE-04 and CAE-30 and saw their visualization, they work as expected 
+

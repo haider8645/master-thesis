@@ -63,3 +63,6 @@ Use just the master branch, it is simple and easy to use.
 03/02/2018
 
 1) I have succesfully made a plot of the CAE-2 using scatter plot. 
+
+08/02/2018
+Succesfully running t-sne and did visualization for 4 and 30 hidden neuros.
