@@ -21,8 +21,8 @@ from caffe.proto import caffe_pb2
 import lmdb
 
 #Size of images
-IMAGE_WIDTH = 127
-IMAGE_HEIGHT = 127
+IMAGE_WIDTH = 384
+IMAGE_HEIGHT = 384
 
 def transform_img(img, img_width=IMAGE_WIDTH, img_height=IMAGE_HEIGHT):
 
@@ -46,7 +46,7 @@ def make_datum(img):
 #        label=label,
         data=np.rollaxis(img, 2).tostring())
 
-trash_pics = '/home/haider/caffe/python-scripts/trashnet/data/*.jpg'
+trash_pics = '/home/haider/caffe/python-scripts/trashnet/data-center-384/*.jpg'
 addrs = glob.glob(trash_pics)
 print 'Length of addrs' 
 print len(addrs)
@@ -66,8 +66,8 @@ print len(test_data)
 
 
 
-train_lmdb = '/home/haider/caffe/testing/train_lmdb'
-validation_lmdb = '/home/haider/caffe/testing/test_lmdb'
+train_lmdb = '/home/haider/caffe/LMDB-datasets/train_lmdb'
+validation_lmdb = '/home/haider/caffe/LMDB-datasets/test_lmdb'
 
 os.system('rm -rf  ' + train_lmdb)
 os.system('rm -rf  ' + validation_lmdb)
@@ -88,11 +88,11 @@ with in_db.begin(write=True) as in_txn:
         if in_idx %  6 == 0:
             continue
         img = cv2.imread(img_path, cv2.IMREAD_COLOR)
-        img = transform_img(img, img_width=IMAGE_WIDTH, img_height=IMAGE_HEIGHT)
-      #  if 'cat' in img_path:
-       #     label = 0
+#        img = transform_img(img, img_width=IMAGE_WIDTH, img_height=IMAGE_HEIGHT)
+#        if 'cat' in img_path:
+#            label = 0
 #else:
-      #      label = 1
+#            label = 1
         datum = make_datum(img)
         in_txn.put('{:0>5d}'.format(in_idx), datum.SerializeToString())
         print '{:0>5d}'.format(in_idx) + ':' + img_path
@@ -107,11 +107,11 @@ with in_db.begin(write=True) as in_txn:
         if in_idx % 6 != 0:
             continue
         img = cv2.imread(img_path, cv2.IMREAD_COLOR)
-        img = transform_img(img, img_width=IMAGE_WIDTH, img_height=IMAGE_HEIGHT)
-        if 'cat' in img_path:
-            label = 0
-        else:
-            label = 1
+#        img = transform_img(img, img_width=IMAGE_WIDTH, img_height=IMAGE_HEIGHT)
+#        if 'cat' in img_path:
+#            label = 0
+#        else:
+#            label = 1
         datum = make_datum(img)
         in_txn.put('{:0>5d}'.format(in_idx), datum.SerializeToString())
         print '{:0>5d}'.format(in_idx) + ':' + img_path
