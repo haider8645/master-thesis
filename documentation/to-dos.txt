@@ -33,3 +33,7 @@ Work on the T-SNE for 4 - CAE model plot in 2D
 
 08/02/2018
 Start working on the trashnet. Convert the picture into smaller images and design a CAE model that is large enough to extract all information of different trash materials
+
+
+17/02/2018
+Get clustering results for trashnet before 27/02/2018

@@ -66,3 +66,10 @@ Use just the master branch, it is simple and easy to use.
 
 08/02/2018
 Succesfully running t-sne and did visualization for 4 and 30 hidden neuros.
+
+17/02/2018
+Successfully made LMDB for trashnet.
+Testing trashnet for different networks
+
+I had in the first convolution layer the stride of 4. It is losing alot of information and the next layers are conv1 do not get any
+information to encode.
