@@ -1,0 +1,270 @@
+name: "Autoencoder"
+layer {
+  name: "data"
+  type: "Data"
+  top: "data"
+  include {
+    phase: TRAIN
+  }
+  transform_param {
+    scale: 0.0039215684
+  }
+  data_param {
+    source: "/home/haider/caffe/LMDB-datasets/train_lmdb"
+    batch_size: 100
+    backend: LMDB
+  }
+}
+layer {
+  name: "data"
+  type: "Data"
+  top: "data"
+  include {
+    phase: TEST
+  }
+  transform_param {
+    scale: 0.0039215684
+  }
+  data_param {
+    source: "/home/haider/caffe/LMDB-datasets/test_lmdb"
+    batch_size: 100
+    backend: LMDB
+  }
+}
+# --------- encoding part ---------
+layer {
+  name: "conv1"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv1"
+  param { lr_mult: 1 decay_mult: 1 }
+  param { lr_mult: 3 decay_mult: 0 }
+  convolution_param {
+    num_output: 26
+    kernel_size: 5
+    stride: 1
+    weight_filler { type: "xavier" }
+    bias_filler { type: "constant" value: 0 }
+  }
+}
+layer {
+  name: "sig1en"
+  type: "Sigmoid"
+  bottom: "conv1"
+  top: "conv1"
+}
+layers {
+  name: "pool1"
+  type: POOLING
+  bottom: "conv1"
+  top: "pool1"
+#  top: "pool1_mask"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "conv2"
+  type: "Convolution"
+  bottom: "pool1"
+  top: "conv2"
+  param { lr_mult: 1 decay_mult: 1 }
+  param { lr_mult: 3 decay_mult: 0 }
+  convolution_param {
+    num_output: 36
+    kernel_size: 5
+    stride: 1
+    weight_filler { type: "xavier" }
+    bias_filler { type: "constant" value: 0 }
+  }
+}
+layer {
+  name: "sig1en"
+  type: "Sigmoid"
+  bottom: "conv2"
+  top: "conv2"
+}
+layers {
+  name: "pool2"
+  type: POOLING
+  bottom: "conv2"
+  top: "pool2"
+#  top: "pool2_mask"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "ip1encode"
+  type: "InnerProduct"
+  bottom: "pool2"
+  top: "ip1encode"
+  param { lr_mult: 1 decay_mult: 1 }
+  param { lr_mult: 3 decay_mult: 0 }
+  inner_product_param {
+    num_output: 250
+    weight_filler { type: "gaussian" std: 1 sparse: 25 }
+    bias_filler { type: "constant" value: 0 }
+  }
+}
+layer {
+  name: "sig3en"
+  type: "Sigmoid"
+  bottom: "ip1encode"
+  top: "ip1encode"
+}
+layer {
+  name: "ip2encode"
+  type: "InnerProduct"
+  bottom: "ip1encode"
+  top: "ip2encode"
+  param { lr_mult: 1 decay_mult: 1 }
+  param { lr_mult: 3 decay_mult: 0 }
+  inner_product_param {
+    num_output: 30
+    weight_filler { type: "gaussian" std: 1 sparse: 25 }
+    bias_filler { type: "constant" value: 0 }
+  }
+}
+# --------- decoding part ---------
+layer {
+  name: "ip1decode"
+  type: "InnerProduct"
+  bottom: "ip2encode"
+  top: "ip1decode"
+  param { lr_mult: 1 decay_mult: 1 }
+  param { lr_mult: 3 decay_mult: 0 }
+  inner_product_param {
+    num_output: 250
+    weight_filler { type: "gaussian" std: 1 sparse: 25 }
+    bias_filler { type: "constant" value: 0 }
+  }
+}
+layer {
+  name: "sig3en"
+  type: "Sigmoid"
+  bottom: "ip1decode"
+  top: "ip1decode"
+}
+
+layer {
+    name: "reshape"
+    type: "Reshape"
+    bottom: "ip1decode"
+    top: "ip1decodesh"
+    reshape_param { shape { dim: 0 dim: 0 dim: 1 dim: 1 } }
+}
+
+layer {
+  name: "deconv2"
+  type: "Deconvolution"
+  bottom: "ip1decodesh"
+  top: "deconv2"
+  param { lr_mult: 1 decay_mult: 1 }
+  param { lr_mult: 3 decay_mult: 0 }
+  convolution_param {
+    num_output: 36
+    kernel_size: 4
+    stride: 1
+    weight_filler { type: "xavier" }
+    bias_filler { type: "constant" value: 0 }
+  }
+}
+layer {
+  name: "sig1de"
+  type: "Sigmoid"
+  bottom: "deconv2"
+  top: "deconv2"
+}
+layers {
+  name: "unpool2"
+  type: "UNPOOLING"
+  bottom: "deconv2"
+#  bottom: "pool2_mask"
+  top: "unpool2"
+  unpooling_param {
+    unpool: MAX
+    kernel_size: 2
+    stride: 2
+    unpool_size: 8
+  }
+}
+
+layer {
+  name: "deconv1"
+  type: "Deconvolution"
+  bottom: "unpool2"
+  top: "deconv1"
+  param { lr_mult: 1 decay_mult: 1 }
+  param { lr_mult: 3 decay_mult: 0 }
+  convolution_param {
+    num_output: 26
+    kernel_size: 5
+    stride: 1
+    weight_filler { type: "xavier" }
+    bias_filler { type: "constant" value: 0 }
+  }
+}
+layer {
+  name: "sig1de"
+  type: "Sigmoid"
+  bottom: "deconv1"
+  top: "deconv1"
+}
+layers {
+  name: "unpool1"
+  type: "Unpooling"
+  bottom: "deconv1"
+#  bottom: "pool1_mask"
+  top: "unpool1"
+  unpooling_param {
+    unpool: MAX
+    kernel_size: 2
+    stride: 2
+    unpool_size: 24
+  }
+}
+
+# -- convert back to 784 elements --
+layer {
+  name: "deconv1neur"
+  type: "Deconvolution"
+  bottom: "unpool1"
+  top: "deconv1neur"
+  param { lr_mult: 1 decay_mult: 1 }
+  param { lr_mult: 3 decay_mult: 0 }
+  convolution_param {
+    num_output: 1
+    kernel_size: 5
+    stride: 1
+    weight_filler { type: "xavier" }
+    bias_filler { type: "constant" value: 0 }
+  }
+}
+# --------- calculate loss ---------
+layers {
+  name: "loss"
+  type: SIGMOID_CROSS_ENTROPY_LOSS
+  bottom: "deconv1neur"
+  bottom: "data"
+  top: "cross_entropy_loss"
+  loss_weight: 1
+}
+layers {
+  name: "deconv1neursig"
+  type: SIGMOID
+  bottom: "deconv1neur"
+  top: "deconv1neursig"
+}
+layers {
+  name: "loss"
+  type: EUCLIDEAN_LOSS
+  bottom: "deconv1neursig"
+  bottom: "data"
+  top: "l2_error"
+  loss_weight: 0
+}
