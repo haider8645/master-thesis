@@ -73,3 +73,8 @@ Testing trashnet for different networks
 
 I had in the first convolution layer the stride of 4. It is losing alot of information and the next layers are conv1 do not get any
 information to encode.
+
+18/02/2018
+
+Successfuly added unpooling layer to the caffe framework.
+
