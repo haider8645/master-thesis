@@ -10,7 +10,7 @@ layer {
     scale: 0.0039215684
   }
   data_param {
-    source: "/home/haider/caffe/LMDB-datasets/train_lmdb"
+    source: "/home/lod/master-thesis/LMDB-datasets/train_lmdb"
     batch_size: 100
     backend: LMDB
   }
@@ -26,7 +26,7 @@ layer {
     scale: 0.0039215684
   }
   data_param {
-    source: "/home/haider/caffe/LMDB-datasets/test_lmdb"
+    source: "/home/lod/master-thesis/LMDB-datasets/test_lmdb"
     batch_size: 100
     backend: LMDB
   }
@@ -53,9 +53,9 @@ layer {
   bottom: "conv1"
   top: "conv1"
 }
-layers {
+layer {
   name: "pool1"
-  type: POOLING
+  type: "Pooling"
   bottom: "conv1"
   top: "pool1"
 #  top: "pool1_mask"
@@ -86,9 +86,9 @@ layer {
   bottom: "conv2"
   top: "conv2"
 }
-layers {
+layer {
   name: "pool2"
-  type: POOLING
+  type: "Pooling"
   bottom: "conv2"
   top: "pool2"
 #  top: "pool2_mask"
@@ -180,7 +180,7 @@ layer {
   bottom: "deconv2"
   top: "deconv2"
 }
-layers {
+layer {
   name: "unpool2"
   type: "UNPOOLING"
   bottom: "deconv2"
@@ -215,9 +215,9 @@ layer {
   bottom: "deconv1"
   top: "deconv1"
 }
-layers {
+layer {
   name: "unpool1"
-  type: "Unpooling"
+  type: "UNPOOLING"
   bottom: "deconv1"
 #  bottom: "pool1_mask"
   top: "unpool1"
@@ -246,23 +246,23 @@ layer {
   }
 }
 # --------- calculate loss ---------
-layers {
+layer {
   name: "loss"
-  type: SIGMOID_CROSS_ENTROPY_LOSS
+  type: "SigmoidCrossEntropyLoss"
   bottom: "deconv1neur"
   bottom: "data"
   top: "cross_entropy_loss"
   loss_weight: 1
 }
-layers {
+layer {
   name: "deconv1neursig"
-  type: SIGMOID
+  type: "Sigmoid"
   bottom: "deconv1neur"
   top: "deconv1neursig"
 }
-layers {
+layer {
   name: "loss"
-  type: EUCLIDEAN_LOSS
+  type: "EuclideanLoss"
   bottom: "deconv1neursig"
   bottom: "data"
   top: "l2_error"
