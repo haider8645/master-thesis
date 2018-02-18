@@ -1,0 +1,2 @@
+The stride of 4 in the first convolution layer is too much, it is causing a huge loss of information. The subsequent
+layer are blank because their input has very little or no information to encode.
