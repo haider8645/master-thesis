@@ -1,34 +1,27 @@
-name: "Autoencoder"
+name: "train-mnistCAEUnpoolPool"
 layer {
   name: "data"
-  type: "Data"
+  type: "HDF5Data"
   top: "data"
   include {
     phase: TRAIN
   }
-  transform_param {
-    scale: 0.0039215684
-  }
-  data_param {
-    source: "/home/lod/master-thesis/LMDB-datasets/train_lmdb"
-    batch_size: 100
-    backend: LMDB
+  hdf5_data_param {
+  source: "/home/lod/master-thesis/examples/master-thesis/pooling-test/data/trainnormfile.txt"
+    batch_size: 50
   }
 }
 layer {
   name: "data"
-  type: "Data"
+  type: "HDF5Data"
   top: "data"
+  top: "label"
   include {
     phase: TEST
   }
-  transform_param {
-    scale: 0.0039215684
-  }
-  data_param {
-    source: "/home/lod/master-thesis/LMDB-datasets/test_lmdb"
-    batch_size: 100
-    backend: LMDB
+  hdf5_data_param {
+  source: "/home/lod/master-thesis/examples/master-thesis/pooling-test/data/testnormfile.txt"
+    batch_size: 50
   }
 }
 # --------- encoding part ---------
