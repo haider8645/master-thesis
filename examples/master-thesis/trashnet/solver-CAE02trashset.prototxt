@@ -7,7 +7,7 @@ base_lr: 0.006
 weight_decay: 0.0005
 lr_policy: "fixed"
 # ---------- visualization parameters ----------
-display: 1000
+display: 10
 max_iter: 20000
 snapshot: 1000
 snapshot_prefix: "/home/lod/master-thesis/examples/master-thesis/trashnet/snapshots"
