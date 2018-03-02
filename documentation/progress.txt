@@ -78,3 +78,7 @@ information to encode.
 
 Successfuly added unpooling layer to the caffe framework.
 
+
+03/03/2018
+Tried all sorts of different models for trashnet but still no luck in getting any results. The results obtained give no reconstruction and the image reconstructed at the output is just some noise.
+

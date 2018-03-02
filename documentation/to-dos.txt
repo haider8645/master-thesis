@@ -37,3 +37,7 @@ Start working on the trashnet. Convert the picture into smaller images and desig
 
 17/02/2018
 Get clustering results for trashnet before 27/02/2018
+
+
+03/03/2018
+Still do not have clustering results of trashnet.. Will try the same network on a dataset today that has just a single channel

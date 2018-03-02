@@ -32,3 +32,7 @@ I have trained CAE-04 and CAE-30 and saw their visualization, they work as expec
 18/02/2018
 
 Trained a network for mnist with unpooling and pooling layers
+
+03/03/2018
+
+trained all different types of models on trashnet, but still no luck
