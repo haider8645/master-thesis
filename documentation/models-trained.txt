@@ -36,3 +36,7 @@ Trained a network for mnist with unpooling and pooling layers
 03/03/2018
 
 trained all different types of models on trashnet, but still no luck
+
+03/03/2018
+
+good results for 512-216-128-128-216-512 network
