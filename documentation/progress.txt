@@ -87,4 +87,6 @@ Getting some respectable results. I did the following
 1) start training at lr 0.0001, wd 0.0001
 2) train the network for 50000 iterations with both scaling of 0-1 and using the mean image of train dataset, lr = 0.00001, wd=0.00001, adam, fixed
 3) after 100000 iterations decrease learn rate to 0.000001
+4) removed cross entropy loss, remove the activation before euclidean loss
+5) all activations are sigmoid, and weight_filler is gaussian for all convolutions layer with max pooling
 
