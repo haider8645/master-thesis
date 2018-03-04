@@ -90,3 +90,5 @@ Getting some respectable results. I did the following
 4) removed cross entropy loss, remove the activation before euclidean loss
 5) all activations are sigmoid, and weight_filler is gaussian for all convolutions layer with max pooling
 
+04/03/2018
+any change made in biba pc needs to be shifted to the home-pc and commited from here
