@@ -1,0 +1,3 @@
+last changes got on 05/03/2018
+
+rsync -chavzP --stats lod@134.102.98.87:/home/lod/master-thesis/examples/master-thesis/new_models/caeWithoutFClayer/building_model  /home/haider/Desktop/biba-trained-models/biba-server/building_model --max-size=20m
