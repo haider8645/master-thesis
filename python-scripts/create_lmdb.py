@@ -51,11 +51,11 @@ addrs = glob.glob(trash_pics)
 print 'Length of addrs' 
 print len(addrs)
 # Divide the hata into 60% train, 20% validation, and 20% test
-train_data = addrs[0:int(0.8*len(addrs))]
+train_data = addrs[0:int(0.7*len(addrs))]
 #train_labels = labels[0:int(0.6*len(labels))]
 #val_addrs = addrs[int(0.6*len(addrs)):int(0.8*len(addrs))]
 #val_labels = labels[int(0.6*len(addrs)):int(0.8*len(addrs))]
-test_data = addrs[int(0.8*len(addrs)):]
+test_data = addrs[int(0.7*len(addrs)):]
 #test_labels = labels[int(0.8*len(labels)):]
 print 'Length of train_addrs' 
 print len(train_data)
@@ -66,18 +66,12 @@ print len(test_data)
 
 
 
-train_lmdb = '/home/haider/caffe/LMDB-datasets/train_lmdb'
-validation_lmdb = '/home/haider/caffe/LMDB-datasets/test_lmdb'
+train_lmdb = '/home/haider/caffe/LMDB-datasets/trashnet384x384/train_lmdb'
+test_lmdb = '/home/haider/caffe/LMDB-datasets/trashnet384x384/test_lmdb'
 
 os.system('rm -rf  ' + train_lmdb)
-os.system('rm -rf  ' + validation_lmdb)
+os.system('rm -rf  ' + test_lmdb)
 
-
-#train_data = [img for img in glob.glob("/home/haider/caffe/python-scripts/train/*jpg")]
-#test_data = [img for img in glob.glob("/home/haider/caffe/python-scripts/test1/*jpg")]
-
-#Shuffle train_data
-#random.shuffle(train_data)
 
 print train_data[0]
 print 'Creating train_lmdb'
@@ -85,33 +79,21 @@ print 'Creating train_lmdb'
 in_db = lmdb.open(train_lmdb, map_size=int(1e12))
 with in_db.begin(write=True) as in_txn:
     for in_idx, img_path in enumerate(train_data):
-        if in_idx %  6 == 0:
-            continue
         img = cv2.imread(img_path, cv2.IMREAD_COLOR)
-#        img = transform_img(img, img_width=IMAGE_WIDTH, img_height=IMAGE_HEIGHT)
-#        if 'cat' in img_path:
-#            label = 0
-#else:
-#            label = 1
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         datum = make_datum(img)
         in_txn.put('{:0>5d}'.format(in_idx), datum.SerializeToString())
         print '{:0>5d}'.format(in_idx) + ':' + img_path
 in_db.close()
 
 
-print '\nCreating validation_lmdb'
+print '\nCreating test_lmdb'
 
-in_db = lmdb.open(validation_lmdb, map_size=int(1e12))
+in_db = lmdb.open(test_lmdb, map_size=int(1e12))
 with in_db.begin(write=True) as in_txn:
-    for in_idx, img_path in enumerate(train_data):
-        if in_idx % 6 != 0:
-            continue
+    for in_idx, img_path in enumerate(test_data):
         img = cv2.imread(img_path, cv2.IMREAD_COLOR)
-#        img = transform_img(img, img_width=IMAGE_WIDTH, img_height=IMAGE_HEIGHT)
-#        if 'cat' in img_path:
-#            label = 0
-#        else:
-#            label = 1
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         datum = make_datum(img)
         in_txn.put('{:0>5d}'.format(in_idx), datum.SerializeToString())
         print '{:0>5d}'.format(in_idx) + ':' + img_path
