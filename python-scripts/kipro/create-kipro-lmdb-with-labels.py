@@ -12,15 +12,15 @@ import lmdb
 IMAGE_WIDTH = 384
 IMAGE_HEIGHT = 384
 
-trash_pics = '/home/haider/caffe/python-scripts/kipro/data-cropped-384/*'
+trash_pics = '/home/haider/caffe/python-scripts/kipro/data-cropped-center/*'
 addrs = glob.glob(trash_pics)
 print 'Length of addrs' 
 print len(addrs)
 # Divide the hata into 60% train, 20% validation, and 20% test
-train_data = addrs[0:int(0.7*len(addrs))]
-train_labels = addrs[0:int(0.7*len(addrs))]
-test_data = addrs[int(0.7*len(addrs)):]
-test_labels = addrs[int(0.7*len(addrs)):]
+train_data = addrs[0:int(0.9*len(addrs))]
+train_labels = addrs[0:int(0.9*len(addrs))]
+test_data = addrs[int(0.9*len(addrs)):]
+test_labels = addrs[int(0.9*len(addrs)):]
 print 'Length of train_addrs' 
 print len(train_data)
 
@@ -29,8 +29,8 @@ print len(test_data)
 
 
 
-train_lmdb = '/home/haider/caffe/LMDB-datasets/kipro-384x384-labels/train_lmdb'
-test_lmdb = '/home/haider/caffe/LMDB-datasets/kipro-384x384-labels/test_lmdb'
+train_lmdb = '/home/haider/caffe/LMDB-datasets/kipro-384x384-center-labels/train_lmdb'
+test_lmdb = '/home/haider/caffe/LMDB-datasets/kipro-384x384-center-labels/test_lmdb'
 
 os.system('rm -rf  ' + train_lmdb)
 os.system('rm -rf  ' + test_lmdb)
@@ -99,5 +99,10 @@ with in_db.begin(write=True) as in_txn:
         in_txn.put('{:0>10d}'.format(in_idx), im_dat.SerializeToString())       
         print '{:0>5d}'.format(in_idx) + ':' + img_path
 in_db.close()
+print 'Length of train_addrs' 
+print len(train_data)
+
+print 'Length of test_addrs' 
+print len(test_data)
 
 print '\nFinished processing all images'
