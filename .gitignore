@@ -7,6 +7,13 @@ cmake_install.cmake
 install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
+HDFView-3.0-centos7
+python-scripts/kipro/data-cropped-384-no-jpg-ending/*
+python-scripts/mnist/backup-t-sne/*
+*.mdb
+*.db
+
+
 
 ## General
 
