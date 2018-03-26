@@ -35,7 +35,7 @@ for j in range(0,1700):
     #print net.blobs["conv4"].data.shape
     for i in range(0,10):
         if j < 1700:
-            X = (net.blobs["conv4"].data[0,i])
+            X = (net.blobs["deconv4"].data[0,i])
             a[i]=np.concatenate((X[0,:],X[1,:],X[2,:],X[3,:],X[4,:],X[5,:],X[6,:],X[7,:]),axis=0)
 
     if j < 1700:
